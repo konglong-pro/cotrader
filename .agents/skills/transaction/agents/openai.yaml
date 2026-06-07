@@ -1,0 +1,7 @@
+interface:
+  display_name: "Transaction"
+  short_description: "A股个股异动、板块联动、交易结构、预期差与风险过滤分析"
+  default_prompt: "Use $transaction to analyze an A-share stock move, compare related stocks, or check abnormal-move risks without giving buy/sell advice."
+
+policy:
+  allow_implicit_invocation: false

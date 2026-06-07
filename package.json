@@ -1,0 +1,11 @@
+{
+  "name": "cotrader",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "extract": "node tools/fetch_and_extract_webpage.mjs",
+    "mcp": "node mcp/fetch_and_extract_webpage_server.mjs",
+    "action": "node actions/http_action_server.mjs"
+  }
+}

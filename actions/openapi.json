@@ -1,0 +1,78 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "cotrader Web Extractor",
+    "version": "0.1.0",
+    "description": "Fetch a user-provided webpage and extract clean text, metadata, image URLs, stock mentions, and pre-market field candidates."
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:8787",
+      "description": "Local development server. Replace with an HTTPS deployment URL before using as a ChatGPT Action."
+    }
+  ],
+  "paths": {
+    "/fetch_and_extract_webpage": {
+      "post": {
+        "operationId": "fetch_and_extract_webpage",
+        "summary": "Fetch and extract a webpage",
+        "description": "Fetches a webpage URL, extracts clean text and structured metadata, and marks webpage-derived market numbers as pending verification.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "HTTP or HTTPS webpage URL."
+                  },
+                  "ocrImages": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Attempt OCR on a small number of images when local tesseract is available."
+                  },
+                  "maxTextChars": {
+                    "type": "integer",
+                    "default": 30000,
+                    "minimum": 1000,
+                    "maximum": 100000
+                  },
+                  "maxImages": {
+                    "type": "integer",
+                    "default": 30,
+                    "minimum": 0,
+                    "maximum": 100
+                  }
+                },
+                "required": ["url"],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Extracted webpage payload.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request."
+          },
+          "500": {
+            "description": "Extraction failed."
+          }
+        }
+      }
+    }
+  }
+}

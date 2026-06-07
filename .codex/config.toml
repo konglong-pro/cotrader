@@ -1,0 +1,11 @@
+# Project-scoped Codex configuration for cotrader.
+# Codex reads this only in trusted projects.
+
+[mcp_servers.cotrader_web_extractor]
+command = "node"
+args = ["mcp/fetch_and_extract_webpage_server.mjs"]
+cwd = "E:/cotrader"
+startup_timeout_sec = 20
+tool_timeout_sec = 60
+enabled = true
+enabled_tools = ["fetch_and_extract_webpage"]
