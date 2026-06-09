@@ -1,0 +1,35 @@
+{
+    "name":  "cotrader",
+    "version":  "0.1.0",
+    "description":  "Codex plugin for A-share research workflows with a transaction skill and webpage extraction MCP tool.",
+    "author":  {
+                   "name":  "konglong-pro"
+               },
+    "repository":  "https://github.com/konglong-pro/cotrader",
+    "keywords":  [
+                     "codex",
+                     "a-share",
+                     "research",
+                     "mcp",
+                     "skill"
+                 ],
+    "skills":  "./skills/",
+    "mcpServers":  "./.mcp.json",
+    "interface":  {
+                      "displayName":  "Cotrader",
+                      "shortDescription":  "A-share research skill and webpage extractor for Codex.",
+                      "longDescription":  "Cotrader packages the explicit $transaction skill and the fetch_and_extract_webpage MCP server for A-share abnormal-move, sector, theme, expectation-gap, and risk analysis. It is for research support only and does not provide deterministic buy or sell advice.",
+                      "developerName":  "konglong-pro",
+                      "category":  "Productivity",
+                      "capabilities":  [
+                                           "Skills",
+                                           "MCP",
+                                           "Research"
+                                       ],
+                      "defaultPrompt":  [
+                                            "$transaction 分析 000001 今日异动",
+                                            "$transaction 对比两只 A 股的板块辨识度",
+                                            "调用 fetch_and_extract_webpage 抓取研报网页"
+                                        ]
+                  }
+}
