@@ -5,8 +5,11 @@ A 股盘前研判智能体辅助工具。
 ## 文件
 
 - `prompts/a-share-premarket-system-prompt.md`：压缩强化版系统提示词。
-- `.agents/skills/transaction/`：A 股个股异动、板块联动、交易结构和风险排雷 skill；显式输入 `$transaction` 时调用。
+- `plugins/cotrader/skills/transaction/`：A 股个股异动、板块联动、交易结构和风险排雷 skill；显式输入 `$transaction` 时调用。
+- `plugins/cotrader/skills/contrast/`：跨美股、日本/日经、韩国、欧洲市场的同题材股票发现、数据核验和对比分析 skill；显式输入 `$contrast` 时调用。
+- `plugins/cotrader/skills/chrome-research/`：通过已安装的 `chrome:control-chrome` 读取当前或指定 Chrome 页面并整理带来源、时间戳和核验状态的研究证据；显式输入 `$chrome-research` 时调用。
 - `.codex/config.toml`：项目级 MCP 配置，让 Codex 能启动网页抽取工具。
+- `lib/`：HTTP/MCP 共用的严格输入校验与安全抓取边界。
 - `tools/fetch_and_extract_webpage.mjs`：核心网页抓取与正文抽取工具，也可作为 CLI 使用。
 - `mcp/fetch_and_extract_webpage_server.mjs`：最小 MCP stdio server，暴露 `fetch_and_extract_webpage`。
 - `actions/http_action_server.mjs`：本地 HTTP Action 包装，暴露 `POST /fetch_and_extract_webpage`。
@@ -23,11 +26,16 @@ npm run mcp
 ```
 
 ```powershell
+$env:COTRADER_ACTION_TOKEN = "replace-with-a-long-random-secret"
 npm run action
 ```
+
+HTTP Action 默认要求 Bearer token，包括监听 loopback 并由反向代理对外暴露的场景。本机临时开发如确需匿名访问，必须显式设置 `COTRADER_ALLOW_UNAUTHENTICATED_LOCAL=true`；不要在反向代理或公网部署中使用该开关。
+
+完整配置见 [`docs/integration.md`](docs/integration.md)，安全边界与部署检查见 [`docs/security.md`](docs/security.md)。
 
 ## 说明
 
 工具会尽量提取标题、发布时间、正文、内嵌页面数据、图片 URL、股票列表和可能的盘前字段。网页中的行情数字默认标记为“网页摘录，待核验”，不会直接当作权威结构化行情数据。
 
-OCR 为可选能力：如果系统安装了 `tesseract`，并在调用时传入 `ocrImages: true`，工具会尝试识别少量图片；否则返回 `ocr_unavailable`。
+OCR 为可选能力：如果系统安装了 `tesseract`，并在调用时传入 `ocrImages: true`，工具会尝试识别少量图片；否则返回 `ocr_unavailable`。HTTP Action 还需显式设置 `COTRADER_ENABLE_OCR=true`。

@@ -3,7 +3,7 @@
   "info": {
     "title": "cotrader Web Extractor",
     "version": "0.1.0",
-    "description": "Fetch a user-provided webpage and extract clean text, metadata, image URLs, stock mentions, and pre-market field candidates."
+    "description": "Fetch a user-provided webpage and extract clean text, metadata, image URLs, stock mentions, research workflow buckets, verification queue, and pre-market field candidates. Bearer authentication is required by default, including behind a loopback reverse proxy. Anonymous loopback development requires the explicit COTRADER_ALLOW_UNAUTHENTICATED_LOCAL=true opt-out. Browser CORS headers are emitted only for origins explicitly listed in COTRADER_ALLOWED_ORIGINS."
   },
   "servers": [
     {
@@ -16,7 +16,12 @@
       "post": {
         "operationId": "fetch_and_extract_webpage",
         "summary": "Fetch and extract a webpage",
-        "description": "Fetches a webpage URL, extracts clean text and structured metadata, and marks webpage-derived market numbers as pending verification.",
+        "description": "Fetches a credential-free HTTP(S) webpage URL, extracts clean text and structured metadata, groups research leads into workflow buckets, builds a verification queue, and marks webpage-derived market numbers as pending verification.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -27,12 +32,14 @@
                   "url": {
                     "type": "string",
                     "format": "uri",
-                    "description": "HTTP or HTTPS webpage URL."
+                    "maxLength": 2048,
+                    "pattern": "^[Hh][Tt][Tt][Pp][Ss]?://",
+                    "description": "Credential-free HTTP or HTTPS webpage URL."
                   },
                   "ocrImages": {
                     "type": "boolean",
                     "default": false,
-                    "description": "Attempt OCR on a small number of images when local tesseract is available."
+                    "description": "Attempt OCR on a small number of images when local tesseract is available and the deployment enables OCR."
                   },
                   "maxTextChars": {
                     "type": "integer",
@@ -47,7 +54,9 @@
                     "maximum": 100
                   }
                 },
-                "required": ["url"],
+                "required": [
+                  "url"
+                ],
                 "additionalProperties": false
               }
             }
@@ -66,12 +75,139 @@
             }
           },
           "400": {
-            "description": "Invalid request."
+            "description": "Malformed JSON or a request that does not match the public input contract.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token.",
+            "headers": {
+              "WWW-Authenticate": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Request body exceeds the server limit.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Content-Type is not application/json.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The extraction concurrency or per-minute request limit has been reached.",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "The upstream webpage could not be fetched or extracted.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "The upstream webpage request timed out.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "500": {
-            "description": "Extraction failed."
+            "description": "Unexpected server failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/ErrorDetail"
+          }
+        },
+        "required": [
+          "error"
+        ],
+        "additionalProperties": false
+      },
+      "ErrorDetail": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "message"
+        ],
+        "additionalProperties": false
       }
     }
   }

@@ -5,7 +5,7 @@
 Before analysis, confirm:
 
 - Current date, weekday, time, A-share trading day status.
-- Phase: pre-market 00:00-09:15, auction 09:15-09:25, morning 09:30-11:30, midday 11:30-13:00, afternoon 13:00-15:00, after-hours after 15:00, or non-trading day.
+- Phase: pre-market from the previous A-share trading day 15:00 to 09:15, auction 09:15-09:25, morning 09:30-11:30, midday 11:30-13:00, afternoon 13:00-15:00, after-hours after 15:00, or non-trading day.
 - “Yesterday” means the previous A-share trading day, not the natural day.
 - “Today” means the current A-share trading day.
 - Information cutoff and whether real-time data was obtained.
@@ -36,6 +36,14 @@ Supplement when needed:
 - Sector/theme performance and recent catalysts.
 - Same-theme peer linkage.
 - Dragon-Tiger List only for limit-up/down, abnormal surges/drops, consecutive moves, or major volume expansion. Describe seat transaction facts only; do not infer intent.
+
+Build a compact evidence ledger:
+
+- Confirmed facts: S/A/B sources with timestamps.
+- Market interpretations: mainstream explanations, theme narratives, or abnormal-move reason summaries.
+- Unverified leads: webpage excerpts, forum claims, short-video claims, screenshot-only information, or source-less data.
+- Stale items: news or announcements that may be reused as fresh catalysts.
+- Missing fields: unavailable quote, sector, announcement, Dragon-Tiger List, or calendar data.
 
 ## Abnormal-Move Classification
 
@@ -99,6 +107,14 @@ Separate:
 - Market-interpreted trigger.
 - Unconfirmed trigger.
 
+Classify freshness:
+
+- New: first public appearance in the current information window.
+- Incremental: new data, new order, new policy detail, product-price change, or event progress adds to an existing theme.
+- Old-but-repriced: old information becomes relevant because market style, peer movement, or policy context changed.
+- Stale repeat: old news is being reused without new information.
+- Rumor-only: no public original source found.
+
 ### 2. Resonance Layer
 
 Check:
@@ -152,6 +168,24 @@ Check:
 - Whether the logic is already consensus.
 - Realization risk and expectation gap.
 
+Classify pricing state:
+
+- Not yet traded: no clear market reaction.
+- Initial reaction: first move with limited consensus.
+- Partially priced: price has reacted, but sector/peer confirmation is incomplete.
+- Consensus/crowded: many peers and narratives already converged.
+- Exhaustion risk: high-position acceleration, weak back-row, failed-board feedback, or repeated old catalyst.
+
+### 6. Crowding Layer
+
+Check:
+
+- Consecutive acceleration and gap-up pressure.
+- Whether front-row strength depends on back-row follow-through.
+- Whether capacity names confirm or only small-cap emotional names move.
+- Whether weakly related stocks are being pulled into the theme.
+- Whether the same catalyst has been traded for multiple sessions without new evidence.
+
 ## Expectation-Gap Rules
 
 Only write “存在预期差” when all can be stated:
@@ -161,7 +195,8 @@ Only write “存在预期差” when all can be stated:
 3. Specific gap: the difference between old and new view.
 4. Evidence: announcements, industry news, policy, or performance data.
 5. Type: earnings, industry position, policy benefit, valuation, sentiment, or event expectation gap.
-6. Whether priced: whether share price has already reflected it.
+6. Pricing state: not yet traded, initial reaction, partially priced, consensus/crowded, or exhaustion risk.
+7. Whether priced: whether share price has already reflected it.
 
 If not clear:
 
@@ -183,6 +218,13 @@ Must include judgment, confidence, confidence reason, and invalidation condition
 ## Validation Signals
 
 For each key logic, give up to 3 each:
+
+Prioritize by workbench timing:
+
+- 09:15-09:25: auction strength,撤单, front-row/back-row matching, and negative feedback.
+- 09:25-09:45: gap hold/fade, first pullback support, peer diffusion, failed-board/reseal quality.
+- 10:00-11:30: sector breadth, capacity-name confirmation, turnover quality, new branch emergence.
+- Afternoon: trend continuation, emotional fatigue, regulatory/announcement updates, and late-session risk.
 
 Strong confirmation:
 
@@ -207,6 +249,7 @@ Check:
 - Regulation: ST/*ST, delisting risk, regulatory letter, inquiry letter, abnormal-move notice, risk warning.
 - Shareholder/liquidity: reduction, unlock, high pledge, low average turnover, abnormal turnover, liquidity gaps.
 - Sentiment: late-stage theme, crowding, no durable catalyst, sector ebb, previous strong direction negative feedback.
+- Research workflow: weak association, stale catalyst reused as fresh news, source-less webpage number, or screenshot-only claim.
 
 ## Confidence
 

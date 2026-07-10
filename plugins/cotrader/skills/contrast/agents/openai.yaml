@@ -1,0 +1,7 @@
+interface:
+  display_name: "Contrast"
+  short_description: "Cross-market same-theme stock discovery and comparison"
+  default_prompt: "Use $contrast to find US, Japan, Korea, and Europe same-theme stocks and compare their verified data."
+
+policy:
+  allow_implicit_invocation: false

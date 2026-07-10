@@ -6,6 +6,7 @@
   "scripts": {
     "extract": "node tools/fetch_and_extract_webpage.mjs",
     "mcp": "node mcp/fetch_and_extract_webpage_server.mjs",
-    "action": "node actions/http_action_server.mjs"
+    "action": "node actions/http_action_server.mjs",
+    "test": "node --test tests/extractor.test.mjs tests/adapters.test.mjs tests/plugin_parity.test.mjs"
   }
 }
