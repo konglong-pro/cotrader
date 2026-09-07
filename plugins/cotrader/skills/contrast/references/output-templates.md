@@ -1,5 +1,27 @@
 # Contrast Output Templates
 
+Choose only the sections relevant to the requested regions, universe and depth. Fewer qualified peers are better than filling a region with unsupported mappings. Put original-source links and evidence IDs beside material claims. Missing or incompatible data must not force scores, ranking or a pricing-state label.
+
+For quantitative comparisons, include this compact context:
+
+```text
+研究窗口 / 信息截止：
+区域 | 实际交易日期与时段 | 行情观测时间 | 延迟/收盘状态 | 可比性限制
+指标 | 定义与期间 | 单位/币种 | 汇率与日期（如换算）| 原始来源/数据时点 | 核验状态
+```
+
+For the main A-share mapping, include:
+
+```text
+假设 ID / 海外事实与证据 ID：
+传导：需求/供给/价格变化 -> A股实际业务暴露 -> 收入/成本/现金流影响 -> 时滞与约束
+最强反证或替代解释：
+确认/失效信号 / 下一核验窗口与来源：
+事实可信度 / 映射与后续演绎置信度及理由：
+```
+
+Use unknown when market data is missing or incompatible. No observable price reaction is not proof that information is unpriced. On follow-up, append original hypothesis, new evidence and supported / weakened / invalidated / pending status without rewriting the original view.
+
 ## Global Theme Discovery
 
 ```text
@@ -21,6 +43,7 @@
 关键催化：
 
 2. 证据台账
+证据行：ID | 声明 | 原始来源链接与等级 | 披露/数据时间 | 单位/期间 | 核验状态
 已确认事实：
 市场数据：
 公司证据：
@@ -149,7 +172,7 @@ ADR重复：
 催化过期：
 
 3. 保留观察池
-最多保留每区域2-5只。
+通常每区域2-5只；不足时保留更少或写明暂无已核验直接可比公司。
 
 4. 后续验证
 最需要补的原始来源：

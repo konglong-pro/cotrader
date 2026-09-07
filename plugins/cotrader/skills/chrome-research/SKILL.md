@@ -65,6 +65,8 @@ Browser visibility is not verification. A value shown in Chrome remains a webpag
 - Prefer regulators, exchanges, government agencies, company filings, and official investor-relations material for core claims.
 - Timestamp market data and include security identity, market, currency, unit, and market phase when available.
 - Mark market or company numbers from a non-authoritative page as `webpage_excerpt_pending_verification`.
+- An authoritative link on a page is a verification lead until its relevant original passage has actually been read and matched to the claim, identity, date and units. Source grade and verification status are separate; multiple reposts of the same original are not independent sources.
+- For material findings, assign evidence IDs and preserve publication/data time separately from retrieval time. In a historical request, label disclosures after the cutoff as later information; do not use them to reconstruct what was known earlier.
 - Treat commentary, forum posts, social media, and page-generated summaries as leads or interpretations, not facts.
 - If a key field is missing or cannot be verified, say so and lower confidence.
 - Never fabricate page content, quotes, prices, announcements, or source links.

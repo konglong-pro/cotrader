@@ -1,6 +1,6 @@
 {
   "name": "cotrader",
-  "version": "0.1.0+codex.20260710134831",
+  "version": "0.1.0+codex.20260907020340",
   "description": "Codex plugin for A-share, cross-market, and authorized Chrome-session research plus webpage extraction.",
   "author": {
     "name": "konglong-pro"

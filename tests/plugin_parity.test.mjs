@@ -16,7 +16,8 @@ const MIRRORED_RUNTIME_FILES = [
   "actions/openapi.json",
   "mcp/fetch_and_extract_webpage_server.mjs",
   "docs/integration.md",
-  "docs/security.md"
+  "docs/security.md",
+  "prompts/a-share-premarket-system-prompt.md"
 ];
 
 test("plugin package runtime mirrors the repository implementation byte-for-byte", async () => {

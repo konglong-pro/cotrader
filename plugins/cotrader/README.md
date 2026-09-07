@@ -11,13 +11,21 @@ This directory is the installable Codex plugin package for cotrader.
 - `tools/fetch_and_extract_webpage.mjs`: no-dependency webpage extraction engine used by CLI, MCP, and HTTP Action wrappers.
 - `lib/`: shared strict request validation and safe public-web fetch boundary.
 - `actions/`: authenticated HTTP Action wrapper and OpenAPI contract.
-- `prompts/a-share-premarket-system-prompt.md`: compressed A-share pre-market system prompt.
+- `prompts/a-share-premarket-system-prompt.md`: evidence-based A-share pre-market hypotheses and follow-up framework.
 
 The extractor also returns:
 
 - `research_workflow_snapshot`: market-structure, policy/regulation, company-announcement, theme, stock-logic, risk, calendar, and opinion buckets.
 - `verification_queue`: prioritized leads that still need S/A/B-level source or structured-data verification.
 - `related_links`: page links classified as possible original sources, announcements, policy/calendar leads, market-data leads, or context links.
+
+## Analysis behavior
+
+Material conclusions carry evidence IDs, original-source links, observation times and verification status. Analysis distinguishes catalyst-to-business transmission, market/sector alternatives, consensus evidence and falsifiable follow-up signals. Historical requests retain their cutoff; later announcements cannot become previously known causes.
+
+Intraday volume comparisons need matched elapsed trading time. Cross-market comparisons align sessions, currencies, share classes, fiscal periods and valuation definitions. Missing data leaves pricing and risk judgments unresolved; research scores are conditional observation priorities, not return probabilities.
+
+On follow-up, the skills preserve the original hypothesis and report supported, weakened, invalidated or pending with new evidence. The plugin does not implement automatic monitoring or a live market-data feed. `get_a_share_premarket_snapshot` in the prompt is an external integration example, not an available tool supplied by this package.
 
 ## Install from this repo marketplace
 

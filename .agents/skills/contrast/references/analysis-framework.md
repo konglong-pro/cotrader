@@ -13,6 +13,8 @@ Before analysis, confirm:
   - Europe: local exchange session or closed.
 - If the data is delayed, end-of-day, or from the previous trading day, state that explicitly.
 
+Use exchange calendars and timezone-aware dates; weekdays alone do not establish open sessions. Keep event time, first disclosure, quote time and retrieval time distinct. For historical analysis, isolate disclosures after the cutoff as later outcomes. Never use a subsequently completed overseas session to explain an earlier A-share decision as information already known.
+
 ## Theme Definition
 
 Convert the user's theme into a search plan:
@@ -66,6 +68,16 @@ Collect only fields that can be timestamped and sourced:
 
 If a field is missing for one region, do not force it. Use "missing" and lower confidence.
 
+### Normalization Before Ranking
+
+- Returns: use the same start/end convention, each exchange's actual session dates, and a consistent price-return or total-return/adjustment basis. Do not rank one market's live partial session against another's full daily close as a like-for-like response. For event comparisons, specify the first tradable session after disclosure in each market and the remaining timing mismatch.
+- Relative performance: compare each stock with a relevant local benchmark over the same window, labeled as descriptive excess return rather than causal alpha. No flat price or overseas rally by itself proves underpricing in A-shares.
+- Currency and listings: show native currencies; convert market caps or turnover only using a sourced FX rate/date. Distinguish a GBp quote from GBP. ADR share ratios and local/ADR quotes must match before comparison; do not double-count listings of the same economic company.
+- Valuation: distinguish trailing vs forward, fiscal year, estimate provider/date, GAAP/IFRS vs adjusted, equity value vs enterprise value, and total-company vs segment economics. Mark P/E for losses or a zero denominator as not meaningful. Do not rank a trailing loss-making P/E against a profitable peer's forward P/E.
+- Liquidity and fundamentals: turnover needs matched windows and currency; financial metrics need comparable periods and definitions. A disclosed theme revenue share from an old annual report is historical exposure, not a current estimate. Do not infer it from product presence or aggregate company revenue.
+
+For derived figures, show formula, sourced inputs, units and assumptions; use an available calculation tool instead of mental arithmetic. Keep incompatible fields side by side with the reason, without producing a numeric ranking. Missing values are not zero; missing prices are not “not yet traded.”
+
 ## Evidence Ledger
 
 Before conclusions, build a compact ledger:
@@ -78,6 +90,8 @@ Before conclusions, build a compact ledger:
 - Stale items: old catalyst reused as new.
 - Missing fields: unavailable quote, market cap, valuation, revenue mix, or index membership.
 
+For material claims use `E1 | claim/value | original source and grade | publication/data time | units/period | status | supports/contradicts`. Identify common originals behind reposts. Read the actual original passage before confirming the claim. Record conflicting like-for-like figures instead of silently selecting the newest retrieval.
+
 ## Cross-Market Comparison Axes
 
 Compare each region and stock on:
@@ -86,7 +100,7 @@ Compare each region and stock on:
 - Data support: source quality and completeness.
 - Market reaction: price move, relative strength, volume/turnover, breadth of same-theme peers.
 - Catalyst freshness: new, incremental, old-but-repriced, stale repeat, rumor-only.
-- Pricing state: not yet traded, initial reaction, partially priced, consensus/crowded, exhaustion risk.
+- Pricing state: no observable reaction, initial reaction, partially priced, consensus/crowded, exhaustion risk, or unknown when data is insufficient.
 - Fundamental confirmation: revenue growth, margin trend, guidance, orders/backlog, capex, product cycle.
 - Liquidity/capacity: market cap, turnover, index membership.
 - A-share read-through: product chain similarity, customer overlap, valuation anchor, sentiment linkage, policy difference.
@@ -96,11 +110,14 @@ Compare each region and stock on:
 
 Classify pricing before making judgments:
 
-- Not yet traded: no obvious move or data not yet updated.
+- No observable reaction: current comparable data shows no clear move; this does not establish that the information is unpriced.
 - Initial reaction: first visible response to a new catalyst.
 - Partially priced: price reacted, but peer breadth or fundamental evidence remains incomplete.
 - Consensus/crowded: many peers and narratives already converged.
 - Exhaustion risk: sharp multi-session rise, weak follow-through, stale catalyst reuse, or high valuation with slowing evidence.
+- Unknown: data is missing, stale, incompatible, or does not cover the catalyst window.
+
+State which observations support each label. A consensus or expectation-gap claim needs a dated expectation source or clearly limited proxy; company guidance, sell-side estimates and media opinion are different evidence. Do not use a guessed consensus or an unexplained score to rank underpricing.
 
 Never infer that A-shares must follow because an overseas peer moved. Say what signal it provides and what would verify or invalidate the mapping.
 
@@ -119,9 +136,13 @@ Use conditional language:
 海外映射的有效性取决于 A 股公司是否具备相同收入暴露、订单/产能验证和板块联动，而不是仅靠概念标签。
 ```
 
+Build the bridge explicitly: overseas fact -> demand/supply/product-price/capex change -> documented A-share exposure -> revenue/cost/margin/cash-flow effect -> timing and limiting condition. Check whether the same event benefits one participant but harms another, such as a material price rise increasing an upstream producer's realizations and a downstream manufacturer's costs. Supply restrictions may constrain a supposed beneficiary; substitution requires evidence of qualification, capacity and access.
+
+For the main mapping hypothesis, give supporting evidence IDs, the strongest counterevidence or alternative explanation, and a future observable event that distinguishes them. Separate business validation from stock-price follow-through. If the user follows up on an earlier map, preserve the original hypothesis/cutoff and report supported / weakened / invalidated / pending with new evidence; absent observations remain pending. Do not invent the original hypothesis or automatically schedule follow-up.
+
 ## Risk Framework
 
-Output at least 2 concrete risks, up to 6:
+Output up to 6 concrete risks, preferably at least 2 when supported. Separate observed risks, conditional risks and unchecked areas; do not invent facts to satisfy a quota:
 
 - Mapping risk: concept overlap but business exposure weak.
 - Data risk: quote, valuation, or segment data missing/stale.
