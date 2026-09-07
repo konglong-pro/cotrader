@@ -6,6 +6,8 @@
 
 - A pre-market system prompt for A-share market hypothesis building.
 - A `transaction` skill for explicit stock/sector abnormal-move analysis.
+- A `contrast` skill for explicit cross-market same-theme stock discovery and comparison.
+- A `chrome-research` skill for explicit, read-only research against an authorized Chrome session.
 - A small webpage extraction tool exposed through CLI, MCP stdio, and HTTP Action wrappers.
 
 This repository is for research workflow support only. Do not produce deterministic buy/sell advice, return promises, or unverified market claims.
@@ -23,18 +25,27 @@ npm run mcp
 ```
 
 ```powershell
+$env:COTRADER_ACTION_TOKEN = "replace-with-a-long-random-secret"
 npm run action
 ```
 
 ## Codex Entry Points
 
 - System prompt: `prompts/a-share-premarket-system-prompt.md`
-- Explicit skill: `.agents/skills/transaction`
+- Plugin skill source: `plugins/cotrader/skills/transaction`
+- Plugin skill source: `plugins/cotrader/skills/contrast`
+- Plugin skill source: `plugins/cotrader/skills/chrome-research`
 - MCP server: `mcp/fetch_and_extract_webpage_server.mjs`
 - HTTP Action server: `actions/http_action_server.mjs`
 - OpenAPI schema: `actions/openapi.json`
+- Shared request/fetch boundary: `lib/`
+- Security and deployment limits: `docs/security.md`
+
+For Codex UI discovery, `.agents/skills` may exist as a directory junction to `plugins/cotrader/skills`. Treat `plugins/cotrader/skills` as the only physical skill source; do not maintain a second copy under `.agents/skills`.
 
 The `transaction` skill is explicit-only. Use it only when the user invokes `$transaction`.
+The `contrast` skill is explicit-only. Use it only when the user invokes `$contrast`.
+The `chrome-research` skill is explicit-only. Use it only when the user invokes `$chrome-research`.
 
 ## Local Command Routing
 
@@ -44,9 +55,29 @@ When the user message starts with or clearly contains:
 $transaction
 ```
 
-load and follow `.agents/skills/transaction/SKILL.md`. If detailed abnormal-move classification, output templates, expectation-gap analysis, bull/bear debate, or risk checks are needed, load the relevant files under `.agents/skills/transaction/references/`.
+load and follow `plugins/cotrader/skills/transaction/SKILL.md`. If detailed abnormal-move classification, output templates, expectation-gap analysis, bull/bear debate, or risk checks are needed, load the relevant files under `plugins/cotrader/skills/transaction/references/`.
 
 Do not invoke `transaction` for ordinary A-share or market questions unless the user explicitly uses `$transaction`.
+
+When the user message starts with or clearly contains:
+
+```text
+$contrast
+```
+
+load and follow `plugins/cotrader/skills/contrast/SKILL.md`. If detailed cross-market candidate discovery, relevance grading, comparable data fields, pricing-state analysis, A-share read-through, output templates, or risk checks are needed, load the relevant files under `plugins/cotrader/skills/contrast/references/`.
+
+Do not invoke `contrast` for ordinary market questions unless the user explicitly uses `$contrast`.
+
+When the user message starts with or clearly contains:
+
+```text
+$chrome-research
+```
+
+load and follow `plugins/cotrader/skills/chrome-research/SKILL.md`. Before any browser interaction, also load and fully follow the installed `chrome:control-chrome` skill. That Chrome skill is authoritative for browser setup, tool selection, runtime documentation, tab handling, authentication, and recovery.
+
+Do not invoke `chrome-research` for ordinary A-share or market questions unless the user explicitly uses `$chrome-research`. Do not hardcode a versioned Chrome plugin cache path or fall back to standalone Playwright, Computer Use, or another browser-control mechanism.
 
 ## MCP Tool
 
@@ -69,6 +100,7 @@ node --check tools\fetch_and_extract_webpage.mjs
 node --check mcp\fetch_and_extract_webpage_server.mjs
 node --check actions\http_action_server.mjs
 node -e "JSON.parse(require('fs').readFileSync('actions/openapi.json','utf8')); console.log('openapi json ok')"
+npm test
 ```
 
 For a live extraction smoke test:

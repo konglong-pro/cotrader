@@ -1,0 +1,7 @@
+interface:
+  display_name: "Chrome Research"
+  short_description: "Read selected Chrome research pages safely"
+  default_prompt: "Use $chrome-research to read the active Chrome research page and extract timestamped, source-labeled evidence."
+
+policy:
+  allow_implicit_invocation: false
